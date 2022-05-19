@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# Aplicaciones que funcionan dentro del proyecto
 #INSTALLED_APPS = [
 DJANGO_APPS = (
     'django.contrib.admin',
@@ -41,8 +41,13 @@ DJANGO_APPS = (
 )
 
 LOCAL_APPS = (
-    'polls.apps.PollsConfig',
-)
+    # Cada vez que se agregue o cree una app es necesario aplicar py manage.py makemigrations 
+    # y el nombre de la app. Este comando describe las tablas creadas en la base de datos
+    # Despues hacer py manage.py migrate para guardar las clases creadas en la app.
+    # Ex: py manage.py makemigrations polls / py manage.py migrate
+    'polls.apps.PollsConfig', # Nombre_de_app.
+                              # apps para referenciar al modulo apps.py de la carpeta polls
+)                             # PollsConfig es por defecto creado = NombreDeAppConfig
 
 THIRD_APPS = (
 
