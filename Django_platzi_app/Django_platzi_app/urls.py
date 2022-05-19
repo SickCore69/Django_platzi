@@ -14,9 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path 
+from django.urls import include # Para incluir todas las rutas que tiene una direccion("url") 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("polls/", include("polls.urls"))
-]
+    # El nombre de la ruta debe ser el mismo de la app para que sea representativo
+    # Con la ruta "polls/", incluye dentro de la app polls en el modelo urls.py todas las urls y usalas
+    path("polls/", include("polls.urls")) # path("endpoint_para_el_url/", include("nombre_app.nombre_archivo_urls"))
+]                                         
