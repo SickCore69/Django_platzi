@@ -14,9 +14,19 @@ class Question(models.Model):
     pub_date = models.DateTimeField("date published")
     
     def __str__(self):
+        """ __str__
+        Retorna el valor que tiene el objeto question_text
+        Atributos:
+            - question_text: models.CharField(max_length=200)
+        Retorna: La pregunta """
         return self.question_text
 
     def was_published_recently(self):
+        """ Fue publicado recientemente
+        Muestra verdadero si la pregunta fue publicada con un dia de diferencia con respecto a la fecha actual
+        Atributos:
+            - pub_date:
+        Retorna: True or False """
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
@@ -31,4 +41,9 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
     def __str__(self):
+        """ __str__
+        Muestra el contenido de la variable choice_text "La respuesta de la pregunta" 
+        Atributo: 
+            - choice_text: models.CharField(max_length=200)
+        Retorna: La o las respuestas de cada pregunta"""
         return self.choice_text
