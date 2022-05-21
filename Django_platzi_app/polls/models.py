@@ -15,7 +15,7 @@ class Question(models.Model):
     
     def __str__(self):
         """ __str__
-        Retorna el valor que tiene el objeto question_text
+        Retorna el valor que tiene el objeto question_text o la pregunta creada
         Atributos:
             - question_text: models.CharField(max_length=200)
         Retorna: La pregunta """
@@ -27,7 +27,7 @@ class Question(models.Model):
         Atributos:
             - pub_date:
         Retorna: True or False """
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return timezone.now() >= self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
     """ Choice
