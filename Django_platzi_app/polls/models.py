@@ -1,7 +1,7 @@
 import datetime # Para hacer uso de la fecha 
 from django.db import models # Modulo models para hacer uso de la clase Model para crear las clases
 from django.utils import timezone # Usar la zona horaria
-
+from django.contrib import admin # Para poder editar comportamientos en la admin
 
 # Tablas creadas en forma de clases para hacer uso de la base de datos
 class Question(models.Model):
@@ -15,19 +15,24 @@ class Question(models.Model):
     
     def __str__(self):
         """ __str__
-        Retorna el valor que tiene el objeto question_text
+        Retorna el valor que tiene el objeto question_text o la pregunta creada
         Atributos:
             - question_text: models.CharField(max_length=200)
         Retorna: La pregunta """
         return self.question_text
 
+    @admin.display(     # Cambia False y True por una X o una palomita 
+        boolean=True,
+        ordering='pub_date',
+        description='¿The question was published recently?',
+    )
     def was_published_recently(self):
         """ Fue publicado recientemente
         Muestra verdadero si la pregunta fue publicada con un dia de diferencia con respecto a la fecha actual
         Atributos:
             - pub_date:
         Retorna: True or False """
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return timezone.now() >= self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
     """ Choice

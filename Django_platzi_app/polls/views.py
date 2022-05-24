@@ -4,6 +4,7 @@ from django.http import HttpResponse # Para realizar peticiones HTTP
 from django.http import HttpResponseRedirect # Para realizar peticiones con redireccion y no se envien los datos del formulario dos veces
 from django.views import generic # Para generar Generic Views al tener funciones que comparten atributos 
 from django.urls import reverse # Forma de usar la etiqueta url y evitar hard code
+from django.utils import timezone
 
 from .models import Question, Choice 
 
@@ -35,12 +36,16 @@ class IndexView(generic.ListView):
     
     def get_queryset(self):
         """ Return the latest five published questions """
-        return Question.objects.order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
 
 # Ver los detalles 
 class DetailView(generic.DetailView):
     model = Question    # Es igual a question = get_object_or_404(Question, pk=question_id)
     template_name = "polls/detail.html"
+
+    def get_queryset(self):
+        """ filter by question that aren't yet published """
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 # Ver los resultados 
 class ResultView(generic.DetailView):
